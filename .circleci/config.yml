@@ -33,7 +33,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udacity" \
             --output text >> inventory.txt
-      - run: echo inventory.txt
+      - run: cat inventory.txt
       - save_cache:
           key: inventory
           paths:
