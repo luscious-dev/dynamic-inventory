@@ -11,7 +11,7 @@ jobs:
           
   createFile:
     docker:
-      - image: img/base:2021.04
+      - image: cimg/base:stable
     steps:
       - checkout
       - run:
