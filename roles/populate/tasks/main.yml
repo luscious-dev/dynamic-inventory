@@ -1,0 +1,6 @@
+---
+- name: Look for ip address
+  shell: |
+    aws ec2 describe-instances --profile wale \
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \
+    --output text >> inventory.text

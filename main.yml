@@ -1,0 +1,6 @@
+---
+- name: Generate inventory
+  hosts: all
+  user: ubuntu
+  roles:
+    - populate

@@ -1,0 +1,40 @@
+---
+version: 2.1
+jobs:
+  create_file:
+    docker:
+      image: img/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: Create inventory file
+          command: touch inventory.txt
+      - run:
+          name: Add group [all] to file
+          command: echo [add] > inventory.txt
+
+  add_address:
+    docker:
+      image: amazon/aws-cli
+    steps:
+      - run:
+          name: Include address into inventory
+          command: |
+            aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --filters "Name=tag:Project,Values=udacity" \
+            --output text >> inventory.txt
+      - save_cache:
+          key: inventory
+          paths:
+            - inventory.txt
+
+workflows:
+  my_workflow:
+    jobs:
+      - create_file
+      - add_address:
+          requires:
+            - create_file
+
+          
