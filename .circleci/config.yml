@@ -1,7 +1,7 @@
 ---
 version: 2.1
 jobs:
-  create_file:
+  createFile:
     docker:
       image: img/base:2021.04
     steps:
@@ -13,7 +13,7 @@ jobs:
           name: Add group [all] to file
           command: echo [add] > inventory.txt
 
-  add_address:
+  addFddress:
     docker:
       image: amazon/aws-cli
     steps:
@@ -24,17 +24,18 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udacity" \
             --output text >> inventory.txt
+      - run: echo inventory.txt
       - save_cache:
           key: inventory
           paths:
             - inventory.txt
 
 workflows:
-  my_workflow:
+  myWorkflow:
     jobs:
-      - create_file
-      - add_address:
+      - createFile
+      - addAddress:
           requires:
-            - create_file
+            - createFile
 
           
