@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Include address into inventory
           command: |
-            aws ec2 describe-instances --region ${AWS_REGION} \
+            aws ec2 describe-instances --region \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udacity" \
             --output text >> inventory.txt
